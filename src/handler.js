@@ -67,8 +67,8 @@ const addBookHandler = (request, h) => {
 const getAllBooksHandler = (request, h) => {
   const { name, reading, finished } = request.query;
 
-  let theBooks = [];
-  if (name) books.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+  let theBooks = books;
+  if (name) theBooks = books.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
   if (reading === 1) theBooks = books.filter((book) => book.reading === true);
   if (reading === 0) theBooks = books.filter((book) => book.reading === false);
   if (finished === 1) theBooks = books.filter((book) => book.finished === true);
@@ -121,6 +121,7 @@ const editBookByIdHandler = (request, h) => {
       message: 'Gagal memperbarui buku. Mohon isi nama buku',
     });
     response.code(400);
+    return response;
   }
 
   if (readPage > pageCount) {
